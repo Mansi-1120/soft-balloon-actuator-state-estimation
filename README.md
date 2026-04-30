@@ -162,96 +162,80 @@ Raw CSV Files → Cleaning → Merging → Validation → Final Dataset
 - 🔁 **Consistent behavior** across all volumes
 - 🎯 Repeatable system response
 - ✓ Confirms stable input-output relationship
+---
 
-📂 Project Structure
+## 📂 Project Structure
 
 ```
 soft balloon actuator state estimation/
-├── LICENSE
-├── README.md
-├── .gitignore
 │
-├── cad for laser cutting & 3d printing/
-│   ├── Bottom plate for AL.ai
-│   ├── Bottom plate for AL.DXF
-│   ├── Bottom plate for AL.SLDDRW
-│   ├── Bottom plate for AL.SLDPRT
-│   ├── camera_mount_camra.SLDPRT
-│   ├── GoPro Camera Side Screw Adapter.SLDPRT
-│   ├── GoPro Flat Mount Camera Side.SLDPRT
-│   ├── GoPro Flat Mount Tripod Side.SLDPRT
-│   ├── keeeper.SLDPRT
-│   ├── Stand.SLDPRT
-│   ├── Table.ai
-│   ├── Table.DXF
-│   ├── Table.SLDDRW
-│   └── Table.SLDPRT
+├── 📄 LICENSE
+├── 📖 README.md
+├── 🔐 .gitignore
 │
-├── data collection/
-│   ├── processed/
-│   │   └── final_dataset.csv
+├── 🎨 cad for laser cutting & 3d printing/
+│   ├── Bottom plate for AL (DXF/SLDDRW/SLDPRT/AI)
+│   ├── Camera mount (SLDPRT)
+│   ├── GoPro mounts (3 variants - SLDPRT)
+│   ├── Stand & Table (DXF/SLDDRW/SLDPRT)
+│   └── Keeper board (SLDPRT)
+│
+├── 📊 data collection/
+│   ├── 📁 processed/
+│   │   └── final_dataset.csv ⭐
 │   │
-│   ├── raw/
+│   ├── 📁 raw/
 │   │   ├── 1 chamber/
-│   │   │   ├── final_dataset.csv
-│   │   │   ├── 5 ml/CSV/
-│   │   │   ├── 10ml/CSV/
-│   │   │   ├── 20 ml/CSV/
-│   │   │   └── 30 ml/CSV/
+│   │   │   ├── 5ml, 10ml, 20ml, 30ml (volume variants)
+│   │   │   ├── Each: 5-35 ml/min flow rates (CSV)
+│   │   │   └── final_dataset.csv (aggregated)
 │   │   │
 │   │   ├── 2 chamber/
-│   │   │   └── 20 ml/CSV/
+│   │   │   └── 20ml with 4 flow rates
 │   │   │
-│   │   └── pessure sensing noisy data.png
+│   │   └── 📸 pessure sensing noisy data.png
 │   │
-│   └── videos/
-│       ├── 1 chamber/
-│       │   ├── 5 ml/
-│       │   ├── 10 ml/
-│       │   ├── 20 ml/
-│       │   └── 30 ml/
-│       │
-│       └── 2 chamber/
-│           └── 20 ml/
+│   └── 📁 videos/
+│       ├── 1 chamber (5,10,20,30ml - MP4)
+│       └── 2 chamber (20ml - MP4)
 │
-├── results/
-│   ├── Flow rate vs time/
+├── 📈 results/
+│   ├── 📊 Flow rate vs time/
 │   │   ├── 5ml.png
-│   │   ├── 10 ml.png
-│   │   ├── 20 ml.png
-│   │   ├── 30 ml.png
+│   │   ├── 10ml.png
+│   │   ├── 20ml.png
+│   │   ├── 30ml.png
 │   │   └── Combine volume.png
 │   │
-│   └── ml model performance/
+│   └── 🤖 ml model performance/
 │       ├── Actual vs Predicted.png
 │       ├── Deformation vs Flow Rate.png
 │       └── Deformation vs Volume.png
 │
-├── src/
-│   ├── arduino/
+├── 💻 src/
+│   ├── 🔌 arduino/
 │   │   ├── epm control/
 │   │   │   └── Multiple Epm Control.ino
-│   │   │
 │   │   └── pressure sensing/
 │   │       └── pressure sensing.ino
 │   │
-│   ├── data processing/
+│   ├── 🧹 data processing/
 │   │   └── Clean_CSV.py
 │   │
-│   ├── ml model/
+│   ├── 🤖 ml model/
 │   │   └── Polynomial_Regression.py
 │   │
-│   ├── vision/
+│   ├── 👁️ vision/
 │   │   └── marker_tracking.py
 │   │
-│   └── visualization/
+│   └── 📊 visualization/
 │       ├── all volume combine.py
 │       ├── flow rate vs time- 20 ml.py
 │       ├── flow rate vs time- 30 ml.py
 │       ├── Flow Rate vs Time- 5 ml.py
 │       └── flow rate vs time-10 ml.py
 │
-└── stl files for 3d printing/
+└── 🖨️ stl files for 3d printing/
     ├── Board Keeper.STL
     ├── camera_mount_camra.3MF
     ├── GoPro Camera Side Screw Adapter.STL
@@ -260,45 +244,94 @@ soft balloon actuator state estimation/
     └── Stand.STL
 ```
 
-🚀 How to Run
+---
 
-**Install Dependencies**
+## 🚀 Quick Start Guide
+
+### 1️⃣ Install Dependencies
 ```bash
 pip install numpy pandas matplotlib opencv-python scikit-learn
 ```
 
-**Run Marker Tracking**
+### 2️⃣ Process Data
+```bash
+python src/data\ processing/Clean_CSV.py
+```
+
+### 3️⃣ Run Vision Tracking
 ```bash
 python src/vision/marker_tracking.py
 ```
 
-**Clean Data**
+### 4️⃣ Train ML Model
 ```bash
-python src/data processing/Clean_CSV.py
+python src/ml\ model/Polynomial_Regression.py
 ```
 
-**Train Model**
+### 5️⃣ Generate Visualizations
 ```bash
-python src/ml model/Polynomial_Regression.py
+python src/visualization/all\ volume\ combine.py
 ```
 
-**Generate Plots**
-```bash
-python src/visualization/all volume combine.py
-```
+> ⏱️ **Total Runtime:** ~2-3 minutes (depending on video length)
 
-🧠 Key Insight
-Soft actuators exhibit nonlinear dynamic behavior, and deformation can be effectively estimated using volume and flow rate, eliminating the need for complex sensing.
+---
 
-🔬 Future Work
-- Real-time control integration
-- Closed-loop feedback system
-- Multi-chamber modeling
-- Advanced ML models
+## 💡 Key Insights
 
-👩‍💻 Author
-Mansi Singh  
-MS Robotics | AI | Manipulation Robotics
+### The Core Discovery
 
-📜 License
-This project is licensed under the MIT License.
+> **Soft actuators exhibit nonlinear dynamic behavior, and deformation can be effectively estimated using volume and flow rate, eliminating the need for complex pressure sensing.**
+
+### Why This Matters
+
+| Traditional Approach | Our Approach |
+|---------------------|--------------|
+| 🔴 Pressure sensors | ✅ Vision + Volume/Flow |
+| ❌ High noise | ✅ Low noise |
+| ❌ Complex calibration | ✅ Simple calibration |
+| ❌ Cost & reliability | ✅ Robust & scalable |
+
+---
+
+## 🔬 Future Work
+
+| Priority | Initiative | Impact |
+|----------|-----------|--------|
+| 🟢 High | Real-time control integration | Practical deployment |
+| 🟢 High | Closed-loop feedback system | Improved accuracy |
+| 🟡 Medium | Multi-chamber modeling | Extended capabilities |
+| 🟡 Medium | Advanced ML models (LSTM, GNN) | State-of-the-art performance |
+
+---
+
+## 🏗️ Technology Stack
+
+| Category | Technologies |
+|----------|--------------|
+| **Hardware** | Arduino Nano, MOSFET, Syringe Pump, Pressure Sensor |
+| **Vision** | OpenCV, Python, Marker Detection |
+| **ML/Analysis** | Scikit-learn, Polynomial Regression, NumPy, Pandas |
+| **Visualization** | Matplotlib, Python |
+| **CAD** | SolidWorks, Fusion 360 |
+
+---
+
+## 👩‍💻 Author
+
+**Mansi Singh**  
+🎓 *MS in Robotics | AI | Manipulation Robotics*
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+### ⭐ If you find this project useful, please star it! ⭐
+
+</div>
