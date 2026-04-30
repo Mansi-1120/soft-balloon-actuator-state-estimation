@@ -1,103 +1,167 @@
-🧠 Soft Balloon Actuator State Estimation
+# 🧠 Soft Balloon Actuator State Estimation
 
-📌 Overview
-This project focuses on estimating the deformation (tip displacement) of a soft balloon actuator (SBA) using a data-driven approach.
-Instead of relying on unstable pressure sensing, the model predicts deformation using:
-- Input Volume
-- Flow Rate
+<div align="center">
+  
+  **Estimating Soft Actuator Deformation Using Data-Driven Approaches**
+  
+  [![ME740](https://img.shields.io/badge/Course-ME740-blue)]() 
+  [![Python](https://img.shields.io/badge/Python-3.8+-green)]()
+  [![License](https://img.shields.io/badge/License-MIT-yellow)]()
 
-This work is part of an ongoing research project on an octopus-inspired soft manipulator.
+</div>
 
-📄 Reference presentation: ME740_Presentation (1).pdf
+---
 
-🎯 Objective
-- Estimate actuator deformation (tip displacement)
-- Build a functional relationship: **Deformation = f(Volume, Flow Rate)**
-- Replace unreliable pressure sensing with a stable predictive model
+## 📌 Overview
 
-⚙️ System Overview
+This project focuses on **estimating the deformation (tip displacement)** of a soft balloon actuator (SBA) using a data-driven approach.
 
-**Soft Balloon Actuator (SBA)**
-Fabricated using a layered structure:
-- TPU → sealing layer
-- Teflon circles → air chambers
-- Parchment paper → layer interface
-- Nylon → reinforcement
+> **Key Innovation:** Instead of relying on unstable pressure sensing, the model predicts deformation using only:
+> - 🔹 **Input Volume**
+> - 🔹 **Flow Rate**
 
-Heat press bonding process used for assembly.
+This work is part of an ongoing research project on an **octopus-inspired soft manipulator**, combining soft robotics with machine learning for practical state estimation.
 
-**Electronics & Control**
-- Arduino Nano (multi-channel PCB)
-- H-Bridge MOSFET for EPM valve control
-- Syringe pump for fluid input
-- Pressure sensor (tested but not used in final model)
+📄 **Reference:** ME740_Presentation (1).pdf
 
-📷 Vision-Based Measurement
+---
 
-**Camera Setup**
-- Fixed front-view camera
-- Custom 3D-printed mounting brackets
-- Laser-cut platform for actuator stability
-- 3D-printed red circular marker attached to actuator tip
-- Controlled lighting to reduce noise
+## 🎯 Objective
 
-**Marker Tracking (OpenCV)**
-- Marker detected using color segmentation
-- Pixel-to-mm calibration: 1 px ≈ 0.1 mm
-- Tip displacement extracted from video frames
+| Goal | Description |
+|------|-------------|
+| 🎪 **Primary** | Estimate actuator deformation (tip displacement) |
+| 📐 **Mathematical** | Build functional relationship: **Deformation = f(Volume, Flow Rate)** |
+| 🔧 **Practical** | Replace unreliable pressure sensing with stable predictive model |
 
-📊 Data Collection
-Experiments conducted across:
-- **Volumes**: 5, 10, 20, 30 ml
-- **Flow rates**: 5–35 ml/min
+---
 
-**Measured**:
-- Tip displacement
-- Inflation time
-- Pressure (discarded due to noise)
+## ⚙️ System Overview
 
-⚠️ Why Pressure Was Not Used
-- High noise in readings
-- Poor correlation with deformation
-- Inconsistent across trials
+### 🧱 Soft Balloon Actuator (SBA)
+Fabricated using a **layered composite structure**:
 
-👉 Volume and flow rate showed better stability and predictability
+| Layer | Material | Purpose |
+|-------|----------|---------|
+| 🛡️ Sealing | TPU | Airtight enclosure |
+| 💨 Chambers | Teflon circles | Air channel design |
+| 🔗 Interface | Parchment paper | Layer separation |
+| 💪 Reinforcement | Nylon | Structural support |
 
-🧹 Data Processing
-Raw CSV files cleaned and merged
-Final dataset created: `data collection/processed/final_dataset.csv`
+> Assembly: **Heat press bonding process**
 
-🤖 Machine Learning Model
+### 🔌 Electronics & Control
 
-**Model Used**: Polynomial Regression
+```
+┌─────────────────────────────────────┐
+│   Arduino Nano (Multi-Channel PCB)  │
+│   • EPM Valve Control (H-Bridge)    │
+│   • Pressure Sensing (Optional)     │
+│   • Real-time monitoring            │
+└──────────┬──────────────────────────┘
+           │
+    ┌──────┴──────┬──────────┐
+    │             │          │
+  💧 Syringe   🔌 Valve   📊 Sensor
+   Pump      (MOSFET)  (Unused)
+```
 
-**Why Polynomial?**
-- Captures nonlinear actuator behavior
-- Better fit than linear models
-- Matches physical deformation characteristics
+---
 
-📈 Results
+## 📷 Vision-Based Measurement
 
-**Prediction Performance**
-- Strong agreement between predicted and actual values
-- Most points lie close to ideal line
-- Slight deviation at higher deformation
+### 📹 Camera Setup
+- 📌 Fixed front-view camera positioning
+- 🖨️ Custom 3D-printed mounting brackets
+- 🎯 Laser-cut platform for stability
+- 🔴 Red circular marker on actuator tip
+- 💡 Controlled lighting to minimize noise
 
-**Deformation Trends**
-- Nonlinear relationship with flow rate
-- Higher flow → faster response
-- Different volumes → different deformation patterns
+### 🎨 Marker Tracking (OpenCV)
+```
+Color Segmentation → Centroid Detection → Pixel-to-mm Conversion → Displacement
+     [Red Detection]      [Image Processing]    [Calibration: 1px ≈ 0.1mm]    [Output]
+```
 
-**Flow Rate vs Time**
-- Inflation time decreases with flow rate
-- Higher volume → longer inflation time
-- Nonlinear trend
-- Saturation at high flow rates
+---
 
-**Combined Volume Analysis**
-- Consistent behavior across all volumes
-- Repeatable system response
-- Confirms stable input-output relationship
+## 📊 Data Collection
+
+### 📋 Experimental Parameters
+
+| Parameter | Range | Units |
+|-----------|-------|-------|
+| **Volume** | 5, 10, 20, 30 | ml |
+| **Flow Rate** | 5 – 35 | ml/min |
+| **Chambers** | 1 – 2 | configuration |
+
+### 📈 Measured Outputs
+- ✅ Tip displacement (primary)
+- ✅ Inflation time
+- ❌ Pressure (discarded - noisy)
+
+### ⚠️ Why Pressure Sensing Failed
+
+| Issue | Impact | Resolution |
+|-------|--------|-----------|
+| 🔊 High noise | Unreliable readings | Removed from model |
+| 📉 Poor correlation | Weak predictive power | Used volume/flow instead |
+| 🔄 Inconsistent trials | Non-repeatable results | Switched to vision-based |
+
+**Lesson Learned:** 👉 *Volume and flow rate provided superior stability and predictability*
+
+---
+
+## 🧹 Data Processing
+
+**Pipeline:**
+```
+Raw CSV Files → Cleaning → Merging → Validation → Final Dataset
+                    ↓
+            data collection/processed/final_dataset.csv
+```
+
+---
+
+## 🤖 Machine Learning Model
+
+### 🔍 Model Selection: **Polynomial Regression**
+
+#### Why Polynomial Over Alternatives?
+| Aspect | Linear | Polynomial ✓ | Neural Net |
+|--------|--------|--------------|-----------|
+| Nonlinearity Capture | ❌ | ✅ | ⚠️ |
+| Interpretability | ✅ | ✅ | ❌ |
+| Data Efficiency | ⚠️ | ✅ | ❌ |
+| Physical Match | ❌ | ✅ | ⚠️ |
+
+> **The polynomial model captures the intrinsic nonlinear actuator behavior with minimal data requirements**
+
+---
+
+## 📈 Results
+
+### 🎯 Prediction Performance
+- ✨ **Strong agreement** between predicted and actual values
+- 📍 Most points lie **close to ideal line**
+- 🎪 Slight deviation at higher deformation (expected)
+
+### 🌊 Deformation Trends
+| Observation | Behavior |
+|-------------|----------|
+| Flow Rate Effect | Nonlinear relationship |
+| Higher Flow | Faster response |
+| Volume Impact | Different deformation patterns |
+
+### ⏱️ Flow Rate vs Time
+- ⬇️ Inflation time **decreases** with flow rate
+- ⬆️ Higher volume → **longer inflation time**
+- 📉 Nonlinear saturation at high flow rates
+
+### 🔄 Combined Volume Analysis
+- 🔁 **Consistent behavior** across all volumes
+- 🎯 Repeatable system response
+- ✓ Confirms stable input-output relationship
 
 📂 Project Structure
 
