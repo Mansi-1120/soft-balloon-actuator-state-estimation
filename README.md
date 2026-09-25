@@ -4,9 +4,7 @@
 
   **Estimating soft actuator deformation from volume and flow rate, without pressure sensing**
 
-  [![ME740](https://img.shields.io/badge/Course-ME740-blue)]()
-  [![Python](https://img.shields.io/badge/Python-3.8+-green)]()
-  [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+  ME740 · Morphable Biorobotics Lab · Boston University
 
 </div>
 
@@ -202,23 +200,23 @@ where `y` is tip displacement, `V` is volume, `Q` is flow rate, and `a_ij` are l
 ```
 soft-balloon-actuator-state-estimation/
 │
-├── cad for laser cutting & 3d printing/   # SolidWorks parts/drawings, DXF and AI files for fixtures and camera mounts
-├── stl files for 3d printing/             # STL / 3MF print files (camera mount, GoPro mounts, stand, marker, board keeper)
+├── cad for laser cutting & 3d printing/   # SolidWorks, DXF and AI files for fixtures
+├── stl files for 3d printing/             # STL / 3MF print files
 │
 ├── data collection/
 │   ├── raw/
 │   │   ├── 1 chamber/<volume>/CSV/        # per-trial logs, 5 to 35 ml/min
-│   │   ├── 2 chamber/20 ml/CSV/           # 2-chamber trials (not used in the model)
+│   │   ├── 2 chamber/20 ml/CSV/           # 2-chamber trials (not in the model)
 │   │   └── pessure sensing noisy data.png
-│   ├── processed/final_dataset.csv        # volume, flow rate, max tip displacement (model input)
+│   ├── processed/final_dataset.csv        # model input: volume, flow rate, max tip
 │   └── videos/                            # recorded trials (MP4)
 │
 ├── results/
-│   ├── Flow rate vs time/                 # inflation time vs flow rate, per volume and combined
-│   └── ml model performance/              # predicted vs actual, deformation vs flow rate / volume
+│   ├── Flow rate vs time/                 # inflation time vs flow rate plots
+│   └── ml model performance/              # model prediction and deformation plots
 │
 ├── src/
-│   ├── arduino/                           # EPM valve control and MPRLS pressure sensing
+│   ├── arduino/                           # EPM control and pressure sensing
 │   ├── vision/marker_tracking.py          # live HSV marker tracking + recording
 │   ├── data processing/Clean_CSV.py       # builds final_dataset.csv
 │   ├── ml model/Polynomial_Regression.py  # model fit + result plots
