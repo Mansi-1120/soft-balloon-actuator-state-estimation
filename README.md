@@ -159,6 +159,14 @@ The actuator is a fiber-reinforced soft balloon actuator, fabricated following V
 * **Calibration.** A known reference in the scene gives **255 px ≈ 31 mm** (about 8.22 px/mm), used to convert pixel displacement to millimetres.
 * **Curvature.** Curvature is also estimated with a piecewise constant curvature (PCC) model, but it was too variable and is not used in the final analysis.
 
+#### ▶️ Marker tracking in action
+
+Recorded trial at 20 ml and 10 ml/min, straight from `marker_tracking.py`: the base, mid and tip markers are detected, and the tip displacement, dx/dy and curvature are shown live.
+
+<!-- marker tracking video -->
+
+Original recording: [`data collection/videos/1 chamber/20 ml/20-10.mp4`](data%20collection/videos/1%20chamber/20%20ml/20-10.mp4). All trial videos are in `data collection/videos/`.
+
 CAD for the fixtures is in `cad for laser cutting & 3d printing/`, and print files are in `stl files for 3d printing/`.
 
 ---
@@ -174,16 +182,6 @@ CAD for the fixtures is in `cad for laser cutting & 3d printing/`, and print fil
 * Every trial is recorded as a CSV (time, pressure, marker positions, tip displacement, curvature) and an MP4 video, in `data collection/raw/` and `data collection/videos/`.
 * `src/data processing/Clean_CSV.py` takes the maximum tip displacement of each 1-chamber trial and builds `data collection/processed/final_dataset.csv` (volume, flow rate, tip displacement). The 10 ml, 5 ml/min point (0.44 mm) was added manually from its video.
 * Inflation time is read from the Harvard syringe pump.
-
-### ⚠️ Why pressure was dropped
-
-<p align="center">
-  <img src="data%20collection/raw/pessure%20sensing%20noisy%20data.png" width="520">
-  <br>
-  <em>Logged pressure per trial. Readings jump between trials and do not follow tip displacement.</em>
-</p>
-
-Pressure was collected at the start of the project, but it was noisy, drifted, and was inconsistent across repeated trials. Because pressure depends on both volume and flow rate, it cannot identify the actuator state on its own, so it was removed from the model.
 
 ---
 
