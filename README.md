@@ -49,8 +49,8 @@ so the same pressure can correspond to different shapes depending on how much fl
     <td><img src="results/ml%20model%20performance/Actual%20vs%20Predicted.png" width="360"></td>
   </tr>
   <tr>
-    <td>Inflation time drops as flow rate rises and grows with injected volume. The same curve shape repeats for every volume. Report Figure 4(e).</td>
-    <td>Most points lie close to the ideal line (red dashed); deviations grow at larger deformations. Report Figure 7(a).</td>
+    <td>Inflation time drops as flow rate rises and grows with injected volume. The same curve shape repeats for every volume.</td>
+    <td>Most points lie close to the ideal line (red dashed); deviations grow at larger deformations.</td>
   </tr>
 </table>
 
@@ -59,8 +59,6 @@ Volume and flow rate alone are enough to estimate actuator state, so the unrelia
 ---
 
 ## 📊 Results
-
-All plots below are taken directly from `results/` and are the same images used in the project report.
 
 ### Flow rate and volume behavior
 
@@ -88,7 +86,7 @@ All plots below are taken directly from `results/` and are the same images used 
 * **Nonlinear with saturation.** At low flow rates, a small increase in flow cuts inflation time sharply. At high flow rates the gains flatten out, which suggests the response is also limited by chamber expansion and material compliance, not only by input flow.
 * **Repeatable.** The absolute times change with volume, but the shape of the curve stays the same across all four volumes.
 
-Inflation times come from the Harvard syringe pump and are entered in the plotting scripts in `src/visualization/`.
+Inflation times were measured with the Harvard syringe pump. Plotting scripts are in `src/visualization/`.
 
 ### Model performance
 
@@ -107,8 +105,7 @@ Inflation times come from the Harvard syringe pump and are entered in the plotti
 
 * The third-order polynomial captures the nonlinear relationship between (volume, flow rate) and tip displacement without adding much model complexity.
 * Predictions follow the measured values closely. Larger deviations appear at higher deformations, where material variability and large-expansion nonlinearities matter more.
-* The first two plots are report Figure 7(a) and 7(b). The deformation vs volume plot is an extra view from the same script.
-* Note: the model is fit and evaluated on the full 26-point dataset in `data collection/processed/final_dataset.csv` (no held-out split), so the plots show how well the model fits the collected data.
+* The model is fit on all 26 data points in `data collection/processed/final_dataset.csv`. There is no separate test set yet, so these plots show how well the model fits the collected data.
 
 ---
 
@@ -159,7 +156,7 @@ The actuator is a fiber-reinforced soft balloon actuator, fabricated following V
 
 #### ▶️ Marker tracking in action
 
-Recorded trial at 20 ml and 10 ml/min, straight from `marker_tracking.py`: the base, mid and tip markers are detected, and the tip displacement, dx/dy and curvature are shown live.
+Recorded trial at 20 ml and 10 ml/min using `marker_tracking.py`. The base, mid and tip markers are tracked, and tip displacement, dx/dy and curvature are shown live on screen.
 
 <!-- marker tracking video -->
 
@@ -178,7 +175,7 @@ CAD for the fixtures is in `cad for laser cutting & 3d printing/`, and print fil
 | Configuration | 1 chamber (used for the model); 2-chamber runs at 20 ml are also recorded |
 
 * Every trial is recorded as a CSV (time, pressure, marker positions, tip displacement, curvature) and an MP4 video, in `data collection/raw/` and `data collection/videos/`.
-* `src/data processing/Clean_CSV.py` takes the maximum tip displacement of each 1-chamber trial and builds `data collection/processed/final_dataset.csv` (volume, flow rate, tip displacement). The 10 ml, 5 ml/min point (0.44 mm) was added manually from its video.
+* `src/data processing/Clean_CSV.py` takes the maximum tip displacement of each 1-chamber trial and builds `data collection/processed/final_dataset.csv` (volume, flow rate, tip displacement). The 10 ml, 5 ml/min value (0.44 mm) was measured from the trial video.
 * Inflation time is read from the Harvard syringe pump.
 
 ---
